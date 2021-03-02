@@ -8,6 +8,8 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
+bs4
+nltk
 
 # tests/linter
 black
