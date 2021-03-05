@@ -29,3 +29,12 @@ six>=1.14
 joblib
 memoized-property
 termcolor
+
+scipy
+matplotlib
+nltk
+Pillow
+tqdm
+lmdb
+tensorflow
+tensorboardX
