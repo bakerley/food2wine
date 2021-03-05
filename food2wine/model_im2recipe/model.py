@@ -4,10 +4,10 @@ import torch
 import torch.nn as nn
 import random
 import numpy as np
-from model_im2recipe.modules.encoder import EncoderCNN, EncoderLabels
-from model_im2recipe.modules.transformer_decoder import DecoderTransformer
-from model_im2recipe.modules.multihead_attention import MultiheadAttention
-from model_im2recipe.utils.metrics import softIoU, MaskedCrossEntropyCriterion
+from food2wine.model_im2recipe.modules.encoder import EncoderCNN, EncoderLabels
+from food2wine.model_im2recipe.modules.transformer_decoder import DecoderTransformer
+from food2wine.model_im2recipe.modules.multihead_attention import MultiheadAttention
+from food2wine.model_im2recipe.utils.metrics import softIoU, MaskedCrossEntropyCriterion
 import pickle
 import os
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

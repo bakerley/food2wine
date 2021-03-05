@@ -11,12 +11,13 @@ from scipy import spatial
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from math import pi
+import streamlit as st
 
-wine_variety_vectors = pd.read_csv('./data/wine_aromas_nonaromas.csv', index_col='Unnamed: 0')
-descriptor_frequencies = pd.read_csv('./data/wine_variety_descriptors.csv', index_col='index')
-wine_word2vec_model = Word2Vec.load("./data/food_word2vec_model.bin")
+wine_variety_vectors = pd.read_csv('./food2wine/data/wine_aromas_nonaromas.csv', index_col='Unnamed: 0')
+descriptor_frequencies = pd.read_csv('./food2wine/data/wine_variety_descriptors.csv', index_col='index')
+wine_word2vec_model = Word2Vec.load("./food2wine/data/food_word2vec_model.bin")
 word_vectors = wine_word2vec_model.wv
-food_nonaroma_infos = pd.read_csv('./data/average_nonaroma_vectors.csv', index_col='Unnamed: 0')
+food_nonaroma_infos = pd.read_csv('./food2wine/data/average_nonaroma_vectors.csv', index_col='Unnamed: 0')
 
 def variety_vectors(wine_variety_vectors):
     wine_variety_vectors['weight'] = wine_variety_vectors['weight'].apply(lambda x: 1 - x)
@@ -266,7 +267,7 @@ def plot_wine_recommendations(pairing_wines, pairing_nonaromas, pairing_body, fo
 
     subplot_rows = 3
     subplot_columns = 4
-    plt.figure(figsize=(20, 7), dpi=96)
+    fig = plt.figure(figsize=(20, 7), dpi=96)
 
     gs = gridspec.GridSpec(3, 4, height_ratios=[3, 0.5, 1])
 
@@ -280,7 +281,7 @@ def plot_wine_recommendations(pairing_wines, pairing_nonaromas, pairing_body, fo
         spider_nr += 1
         number_line_nr += 1
         descriptor_nr += 1
-    plt.show()
+    return fig
 
 def get_recipe_from_ingredients(ingredients_list):
     #wine_variety_vectors, descriptor_frequencies, word_vectors, food_nonaroma_infos
@@ -291,8 +292,9 @@ def get_recipe_from_ingredients(ingredients_list):
     wine_recommendations = nonaroma_rules(wine_recommendations, food[0], food[1])
     wine_recommendations = sort_by_aroma_similarity(wine_recommendations, food[2])
     wines = retrieve_pairing_type_info(wine_recommendations, wine_variety_vectors)
-    plot_wine_recommendations(wines[0], wines[1], wines[2], food[0])
+    return plot_wine_recommendations(wines[0], wines[1], wines[2], food[0])
 
 if __name__ == "__main__":
     lasagna = ['cheese', 'noodles', 'egg', 'basil', 'pepper', 'onion', 'salt', 'tomato', 'clove', 'beef']
     get_recipe_from_ingredients(lasagna)
+

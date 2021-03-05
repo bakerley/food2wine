@@ -13,8 +13,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.utils import _single
-import model_im2recipe.modules.utils as utils
-from model_im2recipe.modules.multihead_attention import MultiheadAttention
+import food2wine.model_im2recipe.modules.utils as utils
+from food2wine.model_im2recipe.modules.multihead_attention import MultiheadAttention
 import numpy as np
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 import copy

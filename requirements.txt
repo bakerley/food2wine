@@ -38,3 +38,5 @@ tqdm
 lmdb
 tensorflow
 tensorboardX
+
+streamlit

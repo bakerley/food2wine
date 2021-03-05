@@ -8,15 +8,15 @@ import torch
 import torch.nn as nn
 import numpy as np
 import os
-from model_im2recipe.args import get_parser
+from food2wine.model_im2recipe.args import get_parser
 import pickle
-from model_im2recipe.model import get_model
+from food2wine.model_im2recipe.model import get_model
 from torchvision import transforms
-from model_im2recipe.utils.output_utils import prepare_output
+from food2wine.model_im2recipe.utils.output_utils import prepare_output
 from PIL import Image
 import time
 
-data_dir = './data'
+data_dir = './food2wine/data'
 
 use_gpu = False
 device = torch.device('cuda' if torch.cuda.is_available() and use_gpu else 'cpu')
@@ -85,12 +85,12 @@ def get_recipe_from_image(image):
 def get_recipe_url(demo_urls):
     response = requests.get(demo_urls)
     image = Image.open(BytesIO(response.content))
-    get_recipe_from_image(image)
+    return get_recipe_from_image(image)
 
 
 def get_recipe_upload(path):
     image = Image.open(path).convert('RGB')
-    get_recipe_from_image(image)
+    return get_recipe_from_image(image)
 
 
 to_input_transf = transform()
@@ -98,7 +98,7 @@ model = model_create()
 
 if __name__ == "__main__":
     demo_urls = 'https://circulairehttps-smisolutionsmark.netdna-ssl.com/wp-content/uploads/lasagne-classique.jpg'
-    recipe = get_recipe(demo_urls)
+    recipe = get_recipe_url(demo_urls)
     print(recipe)
 
 
