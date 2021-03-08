@@ -84,8 +84,11 @@ def get_recipe_from_image(image):
 
 def get_recipe_url(demo_urls):
     response = requests.get(demo_urls)
-    image = Image.open(BytesIO(response.content))
-    return get_recipe_from_image(image)
+    try:
+        image = Image.open(BytesIO(response.content))
+        return get_recipe_from_image(image)
+    except:
+        raise Exception("This is not an image url. Please provide a valid one.")
 
 
 def get_recipe_upload(path):

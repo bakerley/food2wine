@@ -40,3 +40,4 @@ tensorflow
 tensorboardX
 
 streamlit
+validators
