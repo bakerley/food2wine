@@ -12,7 +12,6 @@ from PIL import Image
 
 st.set_page_config(layout="wide")
 
-
 # def progress_bar():
 
 #     latest_iteration = st.empty()
@@ -25,7 +24,6 @@ st.set_page_config(layout="wide")
 #         time.sleep(0.1)
 #     latest_iteration.empty()
 #     bar.empty()  # Remove the progress bar
-
 def split_list(a_list):
     half = (len(a_list)+1)//2
     return a_list[:half], a_list[half:]
