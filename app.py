@@ -154,6 +154,13 @@ else:
         else:
            st.sidebar.text("Please provide a file")
 
+
+st.markdown(f"<hr><br>", unsafe_allow_html=True)
+
+presentation = st.markdown("""
+    A remplir
+""")
+
 CSS = """
 h1 {
     color: rgb(109,7,26);
@@ -180,8 +187,10 @@ hr {
     background-color: #cee0f8;
     background-image: none;
     color: black;
-    }
+}
 
+.css-9eqr5v {
+    visibility: hidden;
 }
 """
 st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
