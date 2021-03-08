@@ -254,7 +254,7 @@ def plot_number_line(gs, n, value, dot_color):
     plt.vlines(xmax, y - height / 2., y + height / 2.)
 
     # draw a point on the line
-    px = value
+    px = value + 0.2
     plt.plot(px, y, 'ko', ms = 10, mfc = dot_color)
 
     # add numbers
@@ -267,7 +267,8 @@ def plot_wine_recommendations(pairing_wines, pairing_nonaromas, pairing_body, fo
 
     subplot_rows = 3
     subplot_columns = 4
-    fig = plt.figure(figsize=(20, 7), dpi=96)
+
+    fig = plt.figure(figsize=(20, 7), dpi=96).patch.set_facecolor('#FBC871')
 
     gs = gridspec.GridSpec(3, 4, height_ratios=[3, 0.5, 1])
 
@@ -285,16 +286,16 @@ def plot_wine_recommendations(pairing_wines, pairing_nonaromas, pairing_body, fo
 
 def get_wine_from_ingredients(ingredients_list):
     #wine_variety_vectors, descriptor_frequencies, word_vectors, food_nonaroma_infos
-    wine_variety_vectors2 = variety_vectors(wine_variety_vectors)
-    wine_variety_vectors_normalized = normalized_variety_vectors(wine_variety_vectors2)
+    wine_variety_vectors_ordered = variety_vectors(wine_variety_vectors)
+    wine_variety_vectors_normalized = normalized_variety_vectors(wine_variety_vectors_ordered)
     food = return_all_food_values(ingredients_list, word_vectors ,food_nonaroma_infos) #food_nonaromas, food_weight, aroma_embedding
     wine_recommendations = wine_variety_vectors_normalized.copy()
-    wine_recommendations = nonaroma_rules(wine_recommendations, food[0], food[1])
-    wine_recommendations = sort_by_aroma_similarity(wine_recommendations, food[2])
-    wines = retrieve_pairing_type_info(wine_recommendations, wine_variety_vectors)
+    wine_recommendations1 = nonaroma_rules(wine_recommendations, food[0], food[1])
+    wine_recommendations2 = sort_by_aroma_similarity(wine_recommendations1, food[2])
+    wines = retrieve_pairing_type_info(wine_recommendations2, wine_variety_vectors)
     return plot_wine_recommendations(wines[0], wines[1], wines[2], food[0])
 
 if __name__ == "__main__":
     lasagna = ['cheese', 'noodles', 'egg', 'basil', 'pepper', 'onion', 'salt', 'tomato', 'clove', 'beef']
-    get_recipe_from_ingredients(lasagna)
+    get_wine_from_ingredients(lasagna)
 
