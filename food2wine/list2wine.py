@@ -283,7 +283,7 @@ def plot_wine_recommendations(pairing_wines, pairing_nonaromas, pairing_body, fo
         descriptor_nr += 1
     return fig
 
-def get_recipe_from_ingredients(ingredients_list):
+def get_wine_from_ingredients(ingredients_list):
     #wine_variety_vectors, descriptor_frequencies, word_vectors, food_nonaroma_infos
     wine_variety_vectors2 = variety_vectors(wine_variety_vectors)
     wine_variety_vectors_normalized = normalized_variety_vectors(wine_variety_vectors2)
