@@ -210,11 +210,11 @@ def make_spider(gs, n, data, title, color, food_nonaromas):
     ax.set_theta_direction(-1)
 
     # Draw one axe per variable + add labels labels yet
-    plt.xticks(angles[:-1], categories, color='grey', size=11)
+    plt.xticks(angles[:-1], categories, color='black', size=11)
 
     # Draw ylabels
     ax.set_rlabel_position(0)
-    plt.yticks([0.25, 0.5, 0.75, 1.0], ["0.25","0.50","0.75", "1.00"], color="grey", size=0)
+    plt.yticks([0.25, 0.5, 0.75, 1.0], ["0.25","0.50","0.75", "1.00"], color="black", size=0)
     plt.ylim(0, 1)
 
     # Ind1
@@ -258,8 +258,8 @@ def plot_number_line(gs, n, value, dot_color):
     plt.plot(px, y, 'ko', ms = 10, mfc = dot_color)
 
     # add numbers
-    plt.text(xmin - 0.1, y, 'Light-Bodied', horizontalalignment='right', fontsize=11, color='grey')
-    plt.text(xmax + 0.1, y, 'Full-Bodied', horizontalalignment='left', fontsize=11, color='grey')
+    plt.text(xmin - 0.1, y, 'Light-Bodied', horizontalalignment='right', fontsize=11, color='black')
+    plt.text(xmax + 0.1, y, 'Full-Bodied', horizontalalignment='left', fontsize=11, color='black')
 
     plt.axis('off')
 

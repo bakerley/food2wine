@@ -9,8 +9,10 @@ import re
 import time
 from threading import Thread
 from PIL import Image
+import validators
 
 st.set_page_config(layout="wide")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # def progress_bar():
 
@@ -41,46 +43,49 @@ if 'url' in option:
 
     if st.sidebar.button('Get my wine from Url'):
         # print is visible in server output, not in the page
-        meal = process_from_url(url)
-        st.balloons()
-        recipe = meal[0]
-        wine = meal[1]
+        if url == "":
+            st.sidebar.text("Please provide an URL")
+        elif validators.url(url) != True:
+            st.sidebar.text("Please provide a valid URL")
+        else:
+            meal = process_from_url(url)
+            recipe = meal[0]
+            wine = meal[1]
 
-        st.markdown(f'## You will eat ** {recipe["title"]} **')
+            st.markdown(f'## You will eat ** {recipe["title"]} **')
 
-        st.markdown(f"<hr><br>", unsafe_allow_html=True)
+            st.markdown(f"<hr><br>", unsafe_allow_html=True)
 
-        A, B = split_list(recipe['ingrs'])
+            A, B = split_list(recipe['ingrs'])
 
-        col1, col2, col3 = st.beta_columns(3)
+            col1, col2, col3 = st.beta_columns(3)
 
-        with col1:
-            st.image(
-                f"{url}",
-                width=400, # Manually Adjust the width of the image as per requirement
-            )
-        with col2:
-            st.markdown(f"### The ingredients you need:")
-            for i in A:
-                st.markdown(f'- {i}' )
-        with col3:
-            st.markdown(f"<br><br>", unsafe_allow_html=True)
-            for i in B:
-                st.markdown(f'- {i}' )
+            with col1:
+                st.image(
+                    f"{url}",
+                    width=400, # Manually Adjust the width of the image as per requirement
+                )
+            with col2:
+                st.markdown(f"### The ingredients you need:")
+                for i in A:
+                    st.markdown(f'- {i}' )
+            with col3:
+                st.markdown(f"<br><br>", unsafe_allow_html=True)
+                for i in B:
+                    st.markdown(f'- {i}' )
 
-        st.markdown(f"<hr>", unsafe_allow_html=True)
+            st.markdown(f"<hr>", unsafe_allow_html=True)
 
-        st.markdown(f'## We recommand that you drink:')
+            st.markdown(f'## We recommand that you drink:')
 
-        st.pyplot(wine)
+            st.pyplot(wine)
 
-        st.markdown(f"<hr><br>", unsafe_allow_html=True)
+            st.markdown(f"<hr><br>", unsafe_allow_html=True)
 
-        st.markdown(f'## If you want to cook you can follow:')
+            st.markdown(f'## If you want to cook you can follow:')
 
-        for i in recipe['recipe']:
-            st.markdown(f'- {i}')
-
+            for i in recipe['recipe']:
+                st.markdown(f'- {i}')
 
 elif 'ingredients' in option:
 
@@ -89,12 +94,17 @@ elif 'ingredients' in option:
 
     if st.sidebar.button('Get my wine from a list'):
         # print is visible in server output, not in the page
-        cleaned_text = clean_text(list_food)
-        wine_recommendation = get_wine_from_ingredients(cleaned_text)
-        st.markdown(f'## From those ingredients, you could drink:')
-        st.markdown(f"<hr><br>", unsafe_allow_html=True)
 
-        st.pyplot(wine_recommendation)
+        # print is visible in server output, not in the page
+        if list_food == "":
+            st.sidebar.text("Please provide some ingredients")
+        else:
+            cleaned_text = clean_text(list_food)
+            wine_recommendation = get_wine_from_ingredients(cleaned_text)
+            st.markdown(f'## From those ingredients, you could drink:')
+            st.markdown(f"<hr><br>", unsafe_allow_html=True)
+
+            st.pyplot(wine_recommendation)
 
     st.set_option('deprecation.showfileUploaderEncoding', False)
 
@@ -104,43 +114,45 @@ else:
 
     if st.sidebar.button('Get my wine from my picture'):
         # print is visible in server output, not in the page
+        if uploaded_file is not None:
+            meal = process_from_upload(uploaded_file)
+            recipe = meal[0]
+            wine = meal[1]
 
-        meal = process_from_upload(uploaded_file)
-        recipe = meal[0]
-        wine = meal[1]
+            st.markdown(f'## You will eat ** {recipe["title"]} **')
 
-        st.markdown(f'## You will eat ** {recipe["title"]} **')
+            st.markdown(f"<hr><br>", unsafe_allow_html=True)
 
-        st.markdown(f"<hr><br>", unsafe_allow_html=True)
+            A, B = split_list(recipe['ingrs'])
 
-        A, B = split_list(recipe['ingrs'])
+            col1, col2, col3 = st.beta_columns(3)
 
-        col1, col2, col3 = st.beta_columns(3)
+            with col1:
+                image = Image.open(uploaded_file)
+                st.image(image)
+            with col2:
+                st.markdown(f"### The ingredients you need:")
+                for i in A:
+                    st.markdown(f'- {i}' )
+            with col3:
+                st.markdown(f"<br><br>", unsafe_allow_html=True)
+                for i in B:
+                    st.markdown(f'- {i}' )
 
-        with col1:
-            image = Image.open(uploaded_file)
-            st.image(image)
-        with col2:
-            st.markdown(f"### The ingredients you need:")
-            for i in A:
-                st.markdown(f'- {i}' )
-        with col3:
-            st.markdown(f"<br><br>", unsafe_allow_html=True)
-            for i in B:
-                st.markdown(f'- {i}' )
+            st.markdown(f"<hr>", unsafe_allow_html=True)
 
-        st.markdown(f"<hr>", unsafe_allow_html=True)
+            st.markdown(f'## We recommand that you drink:')
 
-        st.markdown(f'## We recommand that you drink:')
+            st.pyplot(wine)
 
-        st.pyplot(wine)
+            st.markdown(f"<hr><br>", unsafe_allow_html=True)
 
-        st.markdown(f"<hr><br>", unsafe_allow_html=True)
+            st.markdown(f'## If you want to cook you can follow:')
 
-        st.markdown(f'## If you want to cook you can follow:')
-
-        for i in recipe['recipe']:
-            st.markdown(f'- {i}')
+            for i in recipe['recipe']:
+                st.markdown(f'- {i}')
+        else:
+           st.sidebar.text("Please provide a file")
 
 CSS = """
 h1 {
